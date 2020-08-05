@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.views import generic
 
 from .models import Choice, Question
+from .forms import QuestionForm
 
 
 class IndexView(generic.ListView):
@@ -47,3 +48,11 @@ def vote(request, question_id):
         selected_choice.votes += 1
         selected_choice.save()
         return HttpResponseRedirect(reverse('polls:results', args=(question_id, )))
+
+
+def form(request):
+    q_form = QuestionForm()
+    params = {
+        'form': q_form
+    }
+    return render(request, 'polls/form.html', params)
